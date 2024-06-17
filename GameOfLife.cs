@@ -51,14 +51,14 @@ public class Neighborhood
     }
 }
 
-public class GOL
+public class GameOfLife
 {
     public int width { get; }
     public int height { get; }
     public bool[,] area { get; set; }
     public Predicate<Neighborhood> rule { get; set; }
 
-    public GOL()
+    public GameOfLife()
     {
         width = GameSettings.GAME_WIDTH;
         height = GameSettings.GAME_HEIGHT;
@@ -71,7 +71,7 @@ public class GOL
                 area[i, j] = rng.Next(0, 100) < 25;
     }
 
-    public GOL(int width, int height)
+    public GameOfLife(int width, int height)
     {
         this.height = height;
         this.width = width;
@@ -98,8 +98,11 @@ public class GOL
                     surface.SetCellAppearance(i, ii, glyph);
     }
 
-    public void Update()
+    public void Update(bool isPause)
     {
+        if (isPause)
+            return;
+
         var buffer = new bool[width, height];
 
         for (int i = 0; i < width; ++i)
